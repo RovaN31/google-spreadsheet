@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
+require 'json'
 require 'google_drive'
 class Scrapper
   	#ici on recupere l'email d'une mairie à partir de son URL
@@ -26,10 +27,10 @@ class Scrapper
 			
 			end
 			
-			hash = names_arr.zip(emails_arr).to_h
-			return hash
-			JSON.open('emails.json') do |json|
-				json << hash
+			my_hash = names_arr.zip(emails_arr).to_h
+			return my_hash
+			File.open('./db/emails.json', "w") do |json|
+				json << my_hash.to_json
 			end
 
 	end
