@@ -1,7 +1,3 @@
-require 'nokogiri'
-require 'open-uri'
-require 'json'
-require 'google_drive'
 class Scrapper
   	#ici on recupere l'email d'une mairie à partir de son URL
   def get_townhall_email(townhall_url)
@@ -24,12 +20,12 @@ class Scrapper
    end
 		
 	urls = page.xpath('//a[contains(@href, "95")]/@href').each do |url|
-	urls_arr.push(url.text)
+	urls_arr.push(url.value)
 			   
 	end
 
 	urls_arr.each do |url|
-	com = "http://annuaire-des-mairies.com/"+"#{url}"
+	com = "http://annuaire-des-mairies.com/"+url
 	emails_arr.push(get_townhall_email(com))#Voici la liste des emails pour chaque ville
 			
 	end
@@ -66,4 +62,7 @@ class Scrapper
     end   
    end
 end
+Scrapper.new
+Scrapper.spreadsheet
+Scrapper.csv
 Scrapper.new
